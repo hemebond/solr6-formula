@@ -58,3 +58,13 @@ solr6-install:
     - name: {{ solr6.install_dir }}/install_solr_service.sh {{ archive_file }} -f -u {{ solr6.user }} -d {{ solr6.data_dir }}
     - onchanges:
       - cmd: solr6-extract-installer
+
+#
+# Make sure the version symlink has been updated
+#
+solr6-symlink:
+  file.symlink:
+    - name: {{ solr6.install_dir }}/solr
+    - target: {{ solr6.install_dir }}/solr-{{ solr6.version }}
+    - watch_in:
+      - service: solr6

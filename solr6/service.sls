@@ -3,7 +3,7 @@
 
 {% from "solr6/map.jinja" import solr6 with context %}
 
-solr6-name:
+solr6:
   service.running:
     - name: {{ solr6.service.name }}
     - enable: True

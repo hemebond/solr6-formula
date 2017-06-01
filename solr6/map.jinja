@@ -13,17 +13,16 @@ that differ from whats in defaults.yaml
         'Suse': {},
         'Arch': {},
         'RedHat': {},
+        'default': default_settings.solr6,
   }
   , grain="os_family"
-  , merge=salt['pillar.get']('solr6:lookup'))
-%}
-{## Merge the flavor_map to the default settings ##}
-{% do default_settings.solr6.update(os_family_map) %}
+  , base="default"
+)%}
 
 {## Merge in solr6:lookup pillar ##}
 {% set solr6 = salt['pillar.get'](
-        'solr6',
-        default=default_settings.solr6,
+        'solr6:lookup',
+        default=os_family_map,
         merge=True
     )
 %}
