@@ -1,0 +1,7 @@
+solr6:
+  lookup:
+    version: 6.5.1
+    archive:
+      # Download from a specific mirror. Must correlate with version.
+      source: http://www-eu.apache.org/dist/lucene/solr/6.5.1/solr-6.5.1.tgz
+      source_hash: http://www-eu.apache.org/dist/lucene/solr/6.5.1/solr-6.5.1.tgz.md5

@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+solr6:
+  version: 6.3.0
+  archive:
+    host: http://archive.apache.org
+    path: /dist/lucene/solr
+    format: tar
+  install_dir: /opt
+  data_dir: /var/solr
+  config_dir: /etc/solr6
+  user: solr
+  group: solr
+  service:
+    name: solr
