@@ -55,7 +55,7 @@ solr6-extract-installer:
 solr6-install:
   cmd.run:
     - cwd: {{ solr6.install_dir }}
-    - name: {{ solr6.install_dir }}/install_solr_service.sh {{ archive_file }} -f -u {{ solr6.user }} -d {{ solr6.data_dir }}
+    - name: {{ solr6.install_dir }}/install_solr_service.sh {{ archive_file }} -f -u {{ solr6.user }} -d {{ solr6.data_dir }} -p {{ solr6.port }} -s {{ solr6.service.name }}
     - onchanges:
       - cmd: solr6-extract-installer
 
@@ -66,5 +66,23 @@ solr6-symlink:
   file.symlink:
     - name: {{ solr6.install_dir }}/solr
     - target: {{ solr6.install_dir }}/solr-{{ solr6.version }}
+    - watch_in:
+      - service: solr6
+
+#
+# Overwrite and manage the defaults file
+#
+solr6-defaults:
+  file.managed:
+    - name: /etc/default/solr.in.sh
+    - user: root
+    - group: {{ solr6.group }}
+    - mode: 640
+    - contents: |
+        SOLR_PID_DIR="{{ solr6.data_dir }}"
+        SOLR_HOME="{{ solr6.data_dir }}/data"
+        LOG4J_PROPS="{{ solr6.log_properties }}"
+        SOLR_LOGS_DIR="{{ solr6.logs_dir }}"
+        SOLR_PORT="{{ solr6.port }}"
     - watch_in:
       - service: solr6
